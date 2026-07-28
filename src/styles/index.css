@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --soft: #f6f8fb;
+  --line: #e6e8ec;
+  --sky: #00a2e5;
+  --yellow: #fec40d;
+  --orange: #f58020;
+  --red: #d64246;
+  --green: #098855;
+  --ink: #0f1622;
+  --primary: #1b52a4;
+  --muted-foreground: #64748b;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--soft);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.lk-underline {
+  background-image: linear-gradient(
+    transparent 65%,
+    var(--yellow) 65%,
+    var(--yellow) 95%,
+    transparent 95%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 0 0.1em;
+}
+
+.lk-marquee {
+  animation: lk-marquee 35s linear infinite;
+}
+
+@keyframes lk-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.lk-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(27, 82, 164, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(27, 82, 164, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}

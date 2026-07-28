@@ -1,0 +1,14 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8000/api/v1}
+        VITE_APP_NAME: ${VITE_APP_NAME:-Dynamic Rule Builder}
+        VITE_DEFAULT_LANGUAGE: ${VITE_DEFAULT_LANGUAGE:-en}
+        VITE_DEFAULT_THEME: ${VITE_DEFAULT_THEME:-light}
+    container_name: rulebuilder-ui
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-5173}:80"

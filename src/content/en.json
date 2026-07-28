@@ -1,0 +1,478 @@
+{
+  "app": {
+    "name": "RuleBuilder",
+    "tagline": "Build nested filter rules with live query preview",
+    "brand": "RuleBuilder"
+  },
+  "nav": {
+    "home": "Home",
+    "builder": "Rule Builder",
+    "saved": "Saved Rules",
+    "contacts": "Contacts",
+    "dashboard": "Dashboard",
+    "logout": "Logout",
+    "login": "Login",
+    "menu": "Menu",
+    "primaryCta": "Build Rules",
+    "secondaryCta": "Sign In"
+  },
+  "auth": {
+    "kicker": "RuleBuilder Workspace",
+    "heroTitle": "Build Dynamic Filter Rules",
+    "heroSubtitle": "Create nested conditions, validate grouping, and generate live query previews for your contact dataset.",
+    "tagline": "Rules. Groups. Live Preview.",
+    "continueWith": "Continue with",
+    "continueGoogle": "Continue with Google",
+    "continueEmail": "Continue with email",
+    "configureGoogle": "(add VITE_GOOGLE_CLIENT_ID)",
+    "or": "or",
+    "terms": "By continuing you agree to our Terms and Privacy.",
+    "useDifferent": "← Use a different method",
+    "title": "Sign in",
+    "subtitle": "Access your rule workspace",
+    "email": "Email Address",
+    "emailPlaceholder": "you@company.com",
+    "password": "Password",
+    "submit": "Sign in",
+    "registerTitle": "Create account",
+    "registerSubtitle": "Start building dynamic filters",
+    "name": "Full name",
+    "registerSubmit": "Create account",
+    "switchToRegister": "Need an account? Register",
+    "switchToLogin": "Already registered? Sign in",
+    "demoHint": "Use the seeded admin credentials from your environment file.",
+    "googleFailed": "Google sign-in failed. Please try again."
+  },
+  "languageSwitcher": {
+    "title": "Select language",
+    "subtitle": "Choose English, Hindi, or Odia",
+    "close": "Close",
+    "ariaSelect": "Select language"
+  },
+  "decorative": {
+    "bubbles": [
+      {
+        "label": "Rules",
+        "emoji": "📋"
+      },
+      {
+        "label": "Groups",
+        "emoji": "🧩"
+      },
+      {
+        "label": "Query",
+        "emoji": "🔎"
+      },
+      {
+        "label": "Contacts",
+        "emoji": "👥"
+      },
+      {
+        "label": "Templates",
+        "emoji": "📁"
+      }
+    ]
+  },
+  "builder": {
+    "title": "Rule workspace",
+    "subtitle": "Add conditions, nest groups, and preview the generated query.",
+    "stopGrouping": "Stop grouping",
+    "resetGrouping": "Reset grouping",
+    "startGrouping": "Start grouping",
+    "type": "Type",
+    "field": "Field",
+    "operator": "Operator",
+    "value": "Value",
+    "nextOperator": "Next operator",
+    "select": "Select",
+    "enterValue": "Enter value",
+    "add": "Add rule",
+    "update": "Update rule",
+    "cancelEdit": "Cancel edit",
+    "rulesTitle": "Active rules",
+    "emptyRules": "No rules yet. Add your first condition above.",
+    "previewTitle": "Current query criteria",
+    "previewJson": "JSON structure",
+    "previewText": "Readable query",
+    "saveTitle": "Save rule set",
+    "saveName": "Rule name",
+    "saveDescription": "Description",
+    "saveAsTemplate": "Save as template",
+    "saveSubmit": "Save rules",
+    "applyFilter": "Apply to contacts",
+    "searchRules": "Search rules in list",
+    "dragHint": "Drag rows to reorder",
+    "groupOpen": "Open group",
+    "groupClose": "Close group",
+    "edit": "Edit",
+    "delete": "Delete",
+    "ruleNumber": "Rule"
+  },
+  "saved": {
+    "title": "Saved rules & templates",
+    "subtitle": "Reuse previously built filters across sessions.",
+    "search": "Search by name or query",
+    "templatesOnly": "Templates only",
+    "load": "Load",
+    "delete": "Delete",
+    "empty": "No saved rules found.",
+    "page": "Page",
+    "of": "of"
+  },
+  "contacts": {
+    "title": "Contact results",
+    "subtitle": "Dataset records matching the current filter.",
+    "search": "Search contacts",
+    "empty": "No contacts matched.",
+    "total": "Total records",
+    "columns": {
+      "name": "Name",
+      "company": "Company",
+      "industry": "Industry",
+      "jobTitle": "Job Title",
+      "source": "Source",
+      "status": "Status"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
+    "language": "Language",
+    "actions": "Actions",
+    "previous": "Previous",
+    "next": "Next",
+    "required": "Required",
+    "success": "Success",
+    "close": "Close"
+  },
+  "validation": {
+    "requiredFields": "Please complete all required fields.",
+    "invalidGroup": "Grouping brackets are unbalanced.",
+    "saveNameRequired": "Rule name is required."
+  },
+  "languages": {
+    "en": "English",
+    "hi": "Hindi",
+    "or": "Odia"
+  },
+  "logic": {
+    "and": "AND",
+    "or": "OR",
+    "end": "END"
+  },
+  "meta": {
+    "types": {
+      "contact": "Contact"
+    },
+    "fields": {
+      "company": "Company",
+      "industry": "Industry",
+      "job_title": "Job Title",
+      "department": "Department",
+      "language": "Language",
+      "country": "Country",
+      "state": "State",
+      "city": "City",
+      "source": "Source",
+      "status": "Status",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "created_date": "Created Date"
+    },
+    "operators": {
+      "=": "Equals",
+      "!=": "Not Equals",
+      ">": "Greater Than",
+      "<": "Less Than",
+      ">=": "Greater or Equal",
+      "<=": "Less or Equal",
+      "LIKE": "Contains",
+      "NOT LIKE": "Does Not Contain",
+      "IN": "In List",
+      "NOT IN": "Not In List"
+    }
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Dynamic · Nested · Validated",
+      "title1": "Design complex filters,",
+      "title2": "with nested logic —",
+      "title3": "in real time.",
+      "subtitle": "RuleBuilder lets you create multi-condition rules, group them with AND/OR, and preview readable plus JSON queries instantly.",
+      "primaryCta": "Start Building",
+      "secondaryCta": "View Contacts",
+      "cardCta": "Open",
+      "stats": [
+        {
+          "k": "200",
+          "v": "Sample Contacts"
+        },
+        {
+          "k": "14",
+          "v": "Filter Fields"
+        },
+        {
+          "k": "∞",
+          "v": "Nesting Depth"
+        }
+      ],
+      "cards": [
+        {
+          "badge": "Valid · Nested",
+          "meta": "Contact",
+          "title": "Company and industry match",
+          "query": "{company = INFOTREE AND industry = Software}",
+          "statLabel": "Matched rows",
+          "stat": "22 contacts"
+        },
+        {
+          "badge": "Template ready",
+          "meta": "Saved rule",
+          "title": "Language and source filter",
+          "query": "{language = English AND source = Website}",
+          "statLabel": "Next operator",
+          "stat": "AND / OR / END"
+        },
+        {
+          "badge": "Live preview",
+          "meta": "JSON output",
+          "title": "Job title condition",
+          "query": "{job_title = SDE AND status = Active}",
+          "statLabel": "Structure",
+          "stat": "group[]"
+        }
+      ]
+    },
+    "categories": {
+      "eyebrow": "Dataset Fields",
+      "title": "Filter on real contact attributes",
+      "subtitle": "Dropdown values load dynamically from MongoDB — nothing is hardcoded in the UI.",
+      "seeAll": "Open rule builder",
+      "items": [
+        {
+          "key": "company",
+          "name": "Company",
+          "count": "Distinct values"
+        },
+        {
+          "key": "industry",
+          "name": "Industry",
+          "count": "Distinct values"
+        },
+        {
+          "key": "job_title",
+          "name": "Job Title",
+          "count": "Distinct values"
+        },
+        {
+          "key": "department",
+          "name": "Department",
+          "count": "Distinct values"
+        },
+        {
+          "key": "language",
+          "name": "Language",
+          "count": "Distinct values"
+        },
+        {
+          "key": "source",
+          "name": "Source",
+          "count": "Distinct values"
+        },
+        {
+          "key": "status",
+          "name": "Status",
+          "count": "Distinct values"
+        },
+        {
+          "key": "country",
+          "name": "Country",
+          "count": "Distinct values"
+        }
+      ]
+    },
+    "nearby": {
+      "eyebrow": "Query Preview",
+      "kpi": "Live",
+      "kpiLabel": "criteria output",
+      "body": "As you add rules and nesting markers, RuleBuilder generates a readable query string and a structured JSON representation for review and API use.",
+      "cta": "Open the workspace"
+    },
+    "refer": {
+      "eyebrow": "Built for rule authors",
+      "title": "Create nested filters in",
+      "amount": "minutes",
+      "afterAmount": "with confidence.",
+      "body": "Support for unlimited nesting, group start/end markers, rule editing, search, drag-and-drop ordering, and saved templates.",
+      "cta": "Launch builder",
+      "bullets": [
+        "Add and edit rule rows",
+        "Nest groups without limits",
+        "Validate unbalanced brackets",
+        "Save and reuse templates"
+      ]
+    },
+    "how": {
+      "eyebrow": "How It Works",
+      "title": "From condition to filtered contacts",
+      "steps": [
+        {
+          "n": "01",
+          "t": "Select metadata",
+          "d": "Choose Type, Field, Operator, and Value. Fields and values come from the API and MongoDB."
+        },
+        {
+          "n": "02",
+          "t": "Group with logic",
+          "d": "Use group markers and AND/OR/END to express nested conditions like ((A AND B) OR C)."
+        },
+        {
+          "n": "03",
+          "t": "Preview and apply",
+          "d": "Inspect live query criteria, save the rule set, then filter the contact collection."
+        }
+      ]
+    },
+    "vision": {
+      "eyebrow": "Why RuleBuilder",
+      "heading1": "Production-ready filtering,",
+      "heading2": "clean architecture.",
+      "blocks": [
+        {
+          "label": "Reusable UI",
+          "body": "Buttons, inputs, tables, and rule rows are component-based for maintainability and reuse."
+        },
+        {
+          "label": "API-first backend",
+          "body": "FastAPI endpoints for types, fields, values, preview, save, list, and delete — documented in Swagger."
+        },
+        {
+          "label": "MongoDB dataset",
+          "body": "Contacts, type master, and field master collections drive every dropdown and filter result."
+        },
+        {
+          "label": "Quality practices",
+          "body": "JWT auth, form validation, loading states, error handling, dark mode, Docker, and unit tests."
+        }
+      ]
+    },
+    "what": {
+      "eyebrow": "Platform capabilities",
+      "title": "Everything required for dynamic nested rule building.",
+      "body": "English, Hindi, and Odia UI content from JSON. Theme tokens in one file. Secrets only in .env. No hardcoded headings in components.",
+      "primaryCta": "Build a rule set",
+      "secondaryCta": "Explore contacts"
+    },
+    "employers": {
+      "eyebrow": "Works with",
+      "title": "Modern full-stack foundations",
+      "brands": [
+        "REACT",
+        "FASTAPI",
+        "MONGODB",
+        "JWT",
+        "DOCKER",
+        "TAILWIND"
+      ]
+    },
+    "footer": {
+      "tagline": "RuleBuilder — nested filters with live query and JSON preview.",
+      "companyLine": "React (Vite), FastAPI, and MongoDB with modular frontend and backend repositories.",
+      "address": "Multilingual UI · JWT authentication · Docker-ready deployment",
+      "linksTitle": "Platform",
+      "companyTitle": "Workspace",
+      "legalTitle": "Account",
+      "links": [
+        {
+          "label": "Rule Builder",
+          "href": "/builder"
+        },
+        {
+          "label": "Contacts",
+          "href": "/contacts"
+        },
+        {
+          "label": "Saved Rules",
+          "href": "/saved"
+        }
+      ],
+      "company": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Dashboard",
+          "href": "/dashboard"
+        },
+        {
+          "label": "Login",
+          "href": "/login"
+        }
+      ],
+      "legal": [
+        {
+          "label": "Sign in",
+          "href": "/login"
+        },
+        {
+          "label": "Register",
+          "href": "/login"
+        }
+      ],
+      "rights": "© RuleBuilder",
+      "madeInPrefix": "This website is designed and developed by",
+      "madeInName": "Lokanath Panda",
+      "portfolioUrl": "https://lokanathpanda7.netlify.app/",
+      "social": {
+        "github": "https://github.com/iamlokanath",
+        "linkedin": "https://www.linkedin.com/in/lokanath-panda-642193238/"
+      }
+    }
+  },
+  "dashboard": {
+    "eyebrow": "RuleBuilder Workspace",
+    "title": "Rule operations dashboard",
+    "subtitle": "Create nested filters, manage saved templates, and apply rules to the contact dataset.",
+    "primaryCta": "Open Rule Builder",
+    "secondaryCta": "View Contacts",
+    "cards": [
+      {
+        "to": "/builder",
+        "eyebrow": "Create",
+        "title": "Rule Builder",
+        "body": "Add conditions, nest groups, edit rows, reorder with drag-and-drop, and preview queries live.",
+        "cta": "Build now"
+      },
+      {
+        "to": "/saved",
+        "eyebrow": "Reuse",
+        "title": "Saved Templates",
+        "body": "Store rule sets as templates, search them, and load them back into the builder.",
+        "cta": "Browse saved"
+      },
+      {
+        "to": "/contacts",
+        "eyebrow": "Apply",
+        "title": "Contact Results",
+        "body": "Run your active filter against MongoDB contacts with pagination and search.",
+        "cta": "See results"
+      }
+    ],
+    "tips": {
+      "eyebrow": "Validation tips",
+      "title": "Keep rule sets valid",
+      "items": [
+        "Every group start must have a matching group end.",
+        "Use END only on the last rule in the list.",
+        "Required fields: Type, Field, Operator, and Value.",
+        "Save frequently used filters as templates for reuse."
+      ]
+    }
+  }
+}

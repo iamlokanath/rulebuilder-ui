@@ -1,0 +1,118 @@
+{
+  "palette": {
+    "royalBlue": "#1b52a4",
+    "skyBlue": "#00a2e5",
+    "yellow": "#fec40d",
+    "orange": "#f58020",
+    "coral": "#d64246",
+    "emerald": "#098855",
+    "soft": "#f6f8fb",
+    "line": "#e6e8ec",
+    "ink": "#0f1622",
+    "muted": "#64748b"
+  },
+  "fonts": {
+    "sans": "\"Plus Jakarta Sans\", \"IBM Plex Sans\", sans-serif",
+    "display": "\"Plus Jakarta Sans\", sans-serif",
+    "mono": "\"IBM Plex Mono\", monospace"
+  },
+  "radius": {
+    "panel": "16px",
+    "control": "8px"
+  },
+  "shadow": {
+    "panel": "0 20px 40px rgba(27, 82, 164, 0.08)"
+  },
+  "light": {
+    "brand": {
+      "50": "#eef4fb",
+      "100": "#d9e6f6",
+      "200": "#b3cdec",
+      "300": "#7ea8db",
+      "400": "#4a7fc4",
+      "500": "#1b52a4",
+      "600": "#164689",
+      "700": "#123a71",
+      "800": "#0e2e59",
+      "900": "#0a2242"
+    },
+    "accent": {
+      "500": "#00a2e5",
+      "600": "#0089c2",
+      "700": "#0070a0"
+    },
+    "warning": {
+      "500": "#fec40d",
+      "600": "#e0ab00",
+      "700": "#b88c00"
+    },
+    "orange": {
+      "500": "#f58020",
+      "600": "#d96b12",
+      "700": "#b5570e"
+    },
+    "danger": {
+      "500": "#d64246",
+      "600": "#b83438",
+      "700": "#962a2d"
+    },
+    "success": {
+      "500": "#098855",
+      "600": "#077348",
+      "700": "#055e3b"
+    },
+    "surface": "#f6f8fb",
+    "surfaceMuted": "#eef2f7",
+    "surfaceElevated": "#ffffff",
+    "border": "#e6e8ec",
+    "ink": "#0f1622",
+    "inkMuted": "#64748b",
+    "inkInverse": "#ffffff"
+  },
+  "dark": {
+    "brand": {
+      "50": "#0a2242",
+      "100": "#0e2e59",
+      "200": "#123a71",
+      "300": "#164689",
+      "400": "#3d73bb",
+      "500": "#4f8ad0",
+      "600": "#00a2e5",
+      "700": "#4dbeec",
+      "800": "#99d9f4",
+      "900": "#e6f6fc"
+    },
+    "accent": {
+      "500": "#00a2e5",
+      "600": "#33b5ea",
+      "700": "#66c7f0"
+    },
+    "warning": {
+      "500": "#fec40d",
+      "600": "#fed53d",
+      "700": "#fee16e"
+    },
+    "orange": {
+      "500": "#f58020",
+      "600": "#f7994d",
+      "700": "#f9b279"
+    },
+    "danger": {
+      "500": "#d64246",
+      "600": "#e0686b",
+      "700": "#e98e90"
+    },
+    "success": {
+      "500": "#098855",
+      "600": "#2aa374",
+      "700": "#5bbb96"
+    },
+    "surface": "#0b1220",
+    "surfaceMuted": "#121b2c",
+    "surfaceElevated": "#182337",
+    "border": "#2a3a55",
+    "ink": "#e8eef7",
+    "inkMuted": "#9aabc2",
+    "inkInverse": "#0b1220"
+  }
+}
