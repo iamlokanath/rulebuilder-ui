@@ -1,19 +1,22 @@
-import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Pagination } from "@/components/ui/Pagination";
-import { Spinner } from "@/components/ui/Spinner";
+import { PageLoader } from "@/components/ui/Spinner";
 import { Table } from "@/components/ui/Table";
 import { useApp } from "@/context/AppContext";
+import { useToast } from "@/context/ToastContext";
 import { rulesApi } from "@/services/api";
 import type { RuleItem, SavedRule } from "@/types";
 import { getApiErrorMessage } from "@/utils/helpers";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function SavedRulesPage() {
   const { t } = useApp();
+  const toast = useToast();
+  const toastRef = useRef(toast);
+  toastRef.current = toast;
   const navigate = useNavigate();
   const [items, setItems] = useState<SavedRule[]>([]);
   const [page, setPage] = useState(1);
@@ -21,12 +24,11 @@ export function SavedRulesPage() {
   const [search, setSearch] = useState("");
   const [templatesOnly, setTemplatesOnly] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      setError("");
       try {
         const data = await rulesApi.list({
           page,
@@ -37,13 +39,15 @@ export function SavedRulesPage() {
         setItems(data.items);
         setTotalPages(data.total_pages);
       } catch (err) {
-        setError(getApiErrorMessage(err, t.common.error));
+        toastRef.current.error(
+          getApiErrorMessage(err, t.common.errors, t.common.toasts.loadFailed),
+        );
       } finally {
         setLoading(false);
       }
     };
     void load();
-  }, [page, search, templatesOnly, t.common.error]);
+  }, [page, search, templatesOnly, t.common.errors, t.common.toasts.loadFailed]);
 
   const loadRule = (rule: SavedRule) => {
     const normalized: RuleItem[] = rule.rules.map((item, index) => ({
@@ -55,11 +59,15 @@ export function SavedRulesPage() {
   };
 
   const removeRule = async (id: string) => {
+    setDeletingId(id);
     try {
       await rulesApi.remove(id);
       setItems((prev) => prev.filter((item) => item.id !== id));
+      toast.success(t.common.toasts.ruleDeleted);
     } catch (err) {
-      setError(getApiErrorMessage(err, t.common.error));
+      toast.error(getApiErrorMessage(err, t.common.errors, t.common.toasts.deleteFailed));
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -88,8 +96,7 @@ export function SavedRulesPage() {
         </label>
       </div>
 
-      {error ? <Alert variant="error">{error}</Alert> : null}
-      {loading ? <Spinner label={t.common.loading} /> : null}
+      {loading ? <PageLoader label={t.common.loading} /> : null}
 
       {!loading ? (
         <>
@@ -128,7 +135,12 @@ export function SavedRulesPage() {
                     <Button size="sm" variant="secondary" onClick={() => loadRule(row)}>
                       {t.saved.load}
                     </Button>
-                    <Button size="sm" variant="danger" onClick={() => void removeRule(row.id)}>
+                    <Button
+                      size="sm"
+                      variant="danger"
+                      loading={deletingId === row.id}
+                      onClick={() => void removeRule(row.id)}
+                    >
                       {t.saved.delete}
                     </Button>
                   </div>
