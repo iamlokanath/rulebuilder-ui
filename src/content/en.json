@@ -137,7 +137,7 @@
   "common": {
     "loading": "Loading...",
     "saving": "Saving...",
-    "error": "Something went wrong",
+    "error": "Something went wrong. Please try again.",
     "retry": "Retry",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
@@ -147,12 +147,37 @@
     "next": "Next",
     "required": "Required",
     "success": "Success",
-    "close": "Close"
+    "close": "Close",
+    "toasts": {
+      "ruleSaved": "Your rule was saved successfully.",
+      "ruleDeleted": "The rule was deleted.",
+      "ruleAdded": "Rule added to your list.",
+      "ruleUpdated": "Rule updated.",
+      "signedIn": "You're signed in.",
+      "accountCreated": "Account created. You're signed in.",
+      "loadFailed": "We couldn't load the data. Please try again.",
+      "saveFailed": "We couldn't save that. Please try again.",
+      "deleteFailed": "We couldn't delete that. Please try again.",
+      "previewFailed": "We couldn't update the preview. Please try again."
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "network": "We couldn't connect right now. Please check your internet and try again.",
+      "server": "Something went wrong on our side. Please try again in a moment.",
+      "unauthorized": "Your email or password is incorrect.",
+      "sessionExpired": "Your session expired. Please sign in again.",
+      "conflict": "This email is already registered. Try signing in instead.",
+      "forbidden": "You don't have permission to do that.",
+      "notFound": "We couldn't find what you were looking for.",
+      "unavailable": "This is temporarily unavailable. Please try again later.",
+      "validation": "Please check your information and try again.",
+      "googleFailed": "Google sign-in didn't work. Please try again."
+    }
   },
   "validation": {
-    "requiredFields": "Please complete all required fields.",
-    "invalidGroup": "Grouping brackets are unbalanced.",
-    "saveNameRequired": "Rule name is required."
+    "requiredFields": "Please fill in all required fields.",
+    "invalidGroup": "Your rule groups don't match. Please check the opening and closing groups.",
+    "saveNameRequired": "Please enter a name for this rule."
   },
   "languages": {
     "en": "English",

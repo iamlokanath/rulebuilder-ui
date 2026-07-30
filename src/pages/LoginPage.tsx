@@ -2,12 +2,13 @@ import { DottedTrails, WorkerBubbles } from "@/components/auth/AuthDecor";
 import { GoogleIcon, GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
-import { Alert } from "@/components/ui/Alert";
+import { LoadingOverlay } from "@/components/ui/Spinner";
 import { useApp } from "@/context/AppContext";
+import { useToast } from "@/context/ToastContext";
 import { authApi } from "@/services/api";
 import { getApiErrorMessage } from "@/utils/helpers";
 import type { CredentialResponse } from "@react-oauth/google";
-import { Mail } from "lucide-react";
+import { Eye, EyeOff, Mail } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
 
@@ -23,6 +24,7 @@ function safeNextPath(raw: string | null): string {
 
 export function LoginPage() {
   const { t, token, setToken } = useApp();
+  const toast = useToast();
   const [searchParams] = useSearchParams();
   const nextPath = safeNextPath(searchParams.get("next"));
   const [step, setStep] = useState<Step>("choose");
@@ -30,23 +32,23 @@ export function LoginPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   if (token) return <Navigate to={nextPath} replace />;
 
   const onGoogleSuccess = async (response: CredentialResponse) => {
     if (!response.credential) {
-      setError(t.auth.googleFailed);
+      toast.error(t.common.errors.googleFailed);
       return;
     }
     setLoading(true);
-    setError("");
     try {
       const data = await authApi.googleLogin(response.credential);
       setToken(data.access_token);
+      toast.success(t.common.toasts.signedIn);
     } catch (err) {
-      setError(getApiErrorMessage(err, t.auth.googleFailed));
+      toast.error(getApiErrorMessage(err, t.common.errors, t.common.errors.googleFailed));
     } finally {
       setLoading(false);
     }
@@ -54,16 +56,20 @@ export function LoginPage() {
 
   const onEmailSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setError("");
     setLoading(true);
     try {
       if (mode === "register") {
         await authApi.register(name, email, password);
+        const result = await authApi.login(email, password);
+        setToken(result.access_token);
+        toast.success(t.common.toasts.accountCreated);
+      } else {
+        const result = await authApi.login(email, password);
+        setToken(result.access_token);
+        toast.success(t.common.toasts.signedIn);
       }
-      const result = await authApi.login(email, password);
-      setToken(result.access_token);
     } catch (err) {
-      setError(getApiErrorMessage(err, t.common.error));
+      toast.error(getApiErrorMessage(err, t.common.errors));
     } finally {
       setLoading(false);
     }
@@ -71,6 +77,7 @@ export function LoginPage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-soft">
+      <LoadingOverlay show={loading} label={t.common.loading} />
       <DottedTrails />
       <WorkerBubbles />
 
@@ -120,7 +127,7 @@ export function LoginPage() {
                     <GoogleSignInButton
                       label={t.auth.continueGoogle}
                       onSuccess={(response) => void onGoogleSuccess(response)}
-                      onError={() => setError(t.auth.googleFailed)}
+                      onError={() => toast.error(t.common.errors.googleFailed)}
                       disabled={loading}
                     />
                   ) : (
@@ -179,27 +186,44 @@ export function LoginPage() {
                     <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                       {t.auth.password}
                     </span>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(event) => setPassword(event.target.value)}
-                      required
-                      minLength={8}
-                      className="w-full rounded-md border border-line px-3 py-3 text-sm text-ink outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
-                    />
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        required
+                        minLength={8}
+                        className="w-full rounded-md border border-line px-3 py-3 pr-11 text-sm text-ink outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground transition hover:text-ink"
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        tabIndex={-1}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" aria-hidden />
+                        ) : (
+                          <Eye className="h-4 w-4" aria-hidden />
+                        )}
+                      </button>
+                    </div>
                   </label>
-                  {error ? <Alert variant="error">{error}</Alert> : null}
                   <button
                     type="submit"
                     disabled={loading}
                     className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
                   >
+                    {loading ? (
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-r-transparent" />
+                    ) : null}
                     {loading
                       ? t.common.loading
                       : mode === "login"
                         ? t.auth.submit
-                        : t.auth.registerSubmit}{" "}
-                    →
+                        : t.auth.registerSubmit}
+                    {!loading ? " →" : null}
                   </button>
                   <button
                     type="button"
@@ -212,22 +236,13 @@ export function LoginPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      setStep("choose");
-                      setError("");
-                    }}
+                    onClick={() => setStep("choose")}
                     className="block w-full text-center text-xs font-semibold text-muted-foreground hover:text-ink"
                   >
                     {t.auth.useDifferent}
                   </button>
                 </form>
               )}
-
-              {step === "choose" && error ? (
-                <div className="mt-4">
-                  <Alert variant="error">{error}</Alert>
-                </div>
-              ) : null}
 
               <p className="mt-5 text-center text-[11px] text-muted-foreground">{t.auth.terms}</p>
             </div>

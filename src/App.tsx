@@ -1,6 +1,9 @@
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppShell } from "@/components/layout/AppShell";
+import { RouteLoader } from "@/components/ui/RouteLoader";
+import { ToastViewport } from "@/components/ui/Toast";
 import { AppProvider } from "@/context/AppContext";
+import { ToastProvider } from "@/context/ToastContext";
 import { BuilderPage } from "@/pages/BuilderPage";
 import { ContactsPage } from "@/pages/ContactsPage";
 import { DashboardPage } from "@/pages/DashboardPage";
@@ -20,23 +23,27 @@ function GoogleProvider({ children }: { children: ReactNode }) {
 export default function App() {
   return (
     <AppProvider>
-      <GoogleProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route element={<AppShell />}>
-              <Route element={<ProtectedRoute />}>
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/builder" element={<BuilderPage />} />
-                <Route path="/saved" element={<SavedRulesPage />} />
-                <Route path="/contacts" element={<ContactsPage />} />
+      <ToastProvider>
+        <GoogleProvider>
+          <BrowserRouter>
+            <RouteLoader />
+            <ToastViewport />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route element={<AppShell />}>
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/builder" element={<BuilderPage />} />
+                  <Route path="/saved" element={<SavedRulesPage />} />
+                  <Route path="/contacts" element={<ContactsPage />} />
+                </Route>
               </Route>
-            </Route>
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
-      </GoogleProvider>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </GoogleProvider>
+      </ToastProvider>
     </AppProvider>
   );
 }
