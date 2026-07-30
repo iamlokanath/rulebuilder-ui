@@ -2,12 +2,12 @@ import { QueryPreview } from "@/components/rule-builder/QueryPreview";
 import { RuleForm, type RuleDraft } from "@/components/rule-builder/RuleForm";
 import { RuleList } from "@/components/rule-builder/RuleList";
 import { SaveRuleForm } from "@/components/rule-builder/SaveRuleForm";
-import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
-import { Spinner } from "@/components/ui/Spinner";
+import { PageLoader } from "@/components/ui/Spinner";
 import { useApp } from "@/context/AppContext";
+import { useToast } from "@/context/ToastContext";
 import { metadataApi, rulesApi } from "@/services/api";
 import type {
   FieldOption,
@@ -30,6 +30,9 @@ const EMPTY_DRAFT: RuleDraft = {
 
 export function BuilderPage() {
   const { t } = useApp();
+  const toast = useToast();
+  const toastRef = useRef(toast);
+  toastRef.current = toast;
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const prefillApplied = useRef(false);
@@ -49,8 +52,6 @@ export function BuilderPage() {
   const [loadingValues, setLoadingValues] = useState(false);
   const [loadingPreview, setLoadingPreview] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [saveName, setSaveName] = useState("");
   const [saveDescription, setSaveDescription] = useState("");
   const [isTemplate, setIsTemplate] = useState(false);
@@ -66,7 +67,7 @@ export function BuilderPage() {
         setTypes(typeData);
         setOperators(operatorData);
       } catch (err) {
-        setError(getApiErrorMessage(err, t.common.error));
+        toastRef.current.error(getApiErrorMessage(err, t.common.errors, t.common.toasts.loadFailed));
       } finally {
         setLoadingMeta(false);
       }
@@ -112,11 +113,11 @@ export function BuilderPage() {
         const data = await metadataApi.getFields(draft.type);
         setFields(data);
       } catch (err) {
-        setError(getApiErrorMessage(err, t.common.error));
+        toastRef.current.error(getApiErrorMessage(err, t.common.errors, t.common.toasts.loadFailed));
       }
     };
     void loadFields();
-  }, [draft.type, t.common.error]);
+  }, [draft.type, t.common.errors, t.common.toasts.loadFailed]);
 
   // Default operator when arriving from a category chip
   useEffect(() => {
@@ -144,13 +145,13 @@ export function BuilderPage() {
         const data = await metadataApi.getValues(draft.field, draft.type);
         setValues(data);
       } catch (err) {
-        setError(getApiErrorMessage(err, t.common.error));
+        toastRef.current.error(getApiErrorMessage(err, t.common.errors, t.common.toasts.loadFailed));
       } finally {
         setLoadingValues(false);
       }
     };
     void loadValues();
-  }, [draft.field, draft.type, fields, t.common.error]);
+  }, [draft.field, draft.type, fields, t.common.errors, t.common.toasts.loadFailed]);
 
   useEffect(() => {
     const runPreview = async () => {
@@ -168,13 +169,13 @@ export function BuilderPage() {
         const data = await rulesApi.preview(rules);
         setPreview(data);
       } catch (err) {
-        setError(getApiErrorMessage(err, t.common.error));
+        toastRef.current.error(getApiErrorMessage(err, t.common.errors, t.common.toasts.previewFailed));
       } finally {
         setLoadingPreview(false);
       }
     };
     void runPreview();
-  }, [rules, t.common.error]);
+  }, [rules, t.common.errors, t.common.toasts.previewFailed]);
 
   const canSubmitDraft = useMemo(
     () => Boolean(draft.type && draft.field && draft.operator && draft.value.trim()),
@@ -182,10 +183,8 @@ export function BuilderPage() {
   );
 
   const submitDraft = () => {
-    setError("");
-    setSuccess("");
     if (!canSubmitDraft) {
-      setError(t.validation.requiredFields);
+      toast.error(t.validation.requiredFields);
       return;
     }
 
@@ -205,6 +204,7 @@ export function BuilderPage() {
         ),
       );
       setEditingId(null);
+      toast.success(t.common.toasts.ruleUpdated);
     } else {
       const nextRule: RuleItem = {
         id: createId(),
@@ -220,6 +220,7 @@ export function BuilderPage() {
       if (groupingActive) {
         setPendingGroupStart(0);
       }
+      toast.success(t.common.toasts.ruleAdded);
     }
 
     setDraft((prev) => ({
@@ -230,14 +231,12 @@ export function BuilderPage() {
   };
 
   const saveRules = async () => {
-    setError("");
-    setSuccess("");
     if (!saveName.trim()) {
-      setError(t.validation.saveNameRequired);
+      toast.error(t.validation.saveNameRequired);
       return;
     }
     if (!preview?.is_valid) {
-      setError(t.validation.invalidGroup);
+      toast.error(t.validation.invalidGroup);
       return;
     }
     setSaving(true);
@@ -248,18 +247,18 @@ export function BuilderPage() {
         rules,
         is_template: isTemplate,
       });
-      setSuccess(t.common.success);
+      toast.success(t.common.toasts.ruleSaved);
       setSaveName("");
       setSaveDescription("");
       setIsTemplate(false);
     } catch (err) {
-      setError(getApiErrorMessage(err, t.common.error));
+      toast.error(getApiErrorMessage(err, t.common.errors, t.common.toasts.saveFailed));
     } finally {
       setSaving(false);
     }
   };
 
-  if (loadingMeta) return <Spinner label={t.common.loading} />;
+  if (loadingMeta) return <PageLoader label={t.common.loading} />;
 
   return (
     <div className="space-y-5">
@@ -376,8 +375,6 @@ export function BuilderPage() {
             />
           </div>
 
-          {error ? <Alert variant="error">{error}</Alert> : null}
-          {success ? <Alert variant="success">{success}</Alert> : null}
         </div>
       </Card>
 

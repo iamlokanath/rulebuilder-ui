@@ -55,6 +55,12 @@ export function GoogleSignInButton({
       ref={wrapRef}
       className={`relative h-12 w-full ${disabled ? "pointer-events-none opacity-60" : ""}`}
     >
+      {disabled ? (
+        <div className="absolute inset-0 z-30 flex items-center justify-center gap-3 rounded-lg border border-line bg-white px-4 text-sm font-semibold text-ink">
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-r-transparent" />
+          <span>{label}</span>
+        </div>
+      ) : null}
       <div className="absolute inset-0 z-20 overflow-hidden opacity-[0.01]">
         <GoogleLogin
           onSuccess={onSuccess}

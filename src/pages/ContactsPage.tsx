@@ -1,24 +1,26 @@
-import { Alert } from "@/components/ui/Alert";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Pagination } from "@/components/ui/Pagination";
-import { Spinner } from "@/components/ui/Spinner";
+import { PageLoader } from "@/components/ui/Spinner";
 import { Table } from "@/components/ui/Table";
 import { useApp } from "@/context/AppContext";
+import { useToast } from "@/context/ToastContext";
 import { contactsApi } from "@/services/api";
 import type { RuleItem } from "@/types";
 import { getApiErrorMessage } from "@/utils/helpers";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function ContactsPage() {
   const { t } = useApp();
+  const toast = useToast();
+  const toastRef = useRef(toast);
+  toastRef.current = toast;
   const [items, setItems] = useState<Record<string, unknown>[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [activeRules, setActiveRules] = useState<RuleItem[] | null>(null);
 
   useEffect(() => {
@@ -35,7 +37,6 @@ export function ContactsPage() {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      setError("");
       try {
         const data = activeRules?.length
           ? await contactsApi.filter(activeRules, { page, page_size: 10 })
@@ -48,13 +49,15 @@ export function ContactsPage() {
         setTotalPages(data.total_pages);
         setTotal(data.total);
       } catch (err) {
-        setError(getApiErrorMessage(err, t.common.error));
+        toastRef.current.error(
+          getApiErrorMessage(err, t.common.errors, t.common.toasts.loadFailed),
+        );
       } finally {
         setLoading(false);
       }
     };
     void load();
-  }, [page, search, activeRules, t.common.error]);
+  }, [page, search, activeRules, t.common.errors, t.common.toasts.loadFailed]);
 
   return (
     <Card
@@ -79,8 +82,7 @@ export function ContactsPage() {
         </div>
       ) : null}
 
-      {error ? <Alert variant="error">{error}</Alert> : null}
-      {loading ? <Spinner label={t.common.loading} /> : null}
+      {loading ? <PageLoader label={t.common.loading} /> : null}
 
       {!loading ? (
         <>

@@ -13,7 +13,11 @@ export function QueryPreview({ preview, loading }: QueryPreviewProps) {
 
   return (
     <Card title={t.builder.previewTitle}>
-      {loading ? <Spinner label={t.common.loading} /> : null}
+      {loading ? (
+        <div className="flex justify-center py-6">
+          <Spinner label={t.common.loading} />
+        </div>
+      ) : null}
       {!loading && preview ? (
         <div className="grid gap-4 lg:grid-cols-2">
           <div>
